@@ -9,13 +9,13 @@ def speak():
     text = request.form.get("text")
     if not text:
         return "Error: No text provided!", 400
-    
+
     language = "hi"  # Hindi language
     tts = gTTS(text=text, lang=language)
-    
+
     filename = "output.mp3"
     tts.save(filename)
-    
+
     return send_file(filename, as_attachment=True)
 
 if __name__ == "__main__":
