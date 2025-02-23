@@ -10,7 +10,7 @@ def speak():
     if not text:
         return "Error: No text provided!", 400
     
-    language = "hi"  # Set language to Hindi
+    language = "hi"  # Hindi language
     tts = gTTS(text=text, lang=language)
     
     filename = "output.mp3"
@@ -19,4 +19,5 @@ def speak():
     return send_file(filename, as_attachment=True)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=5000)
