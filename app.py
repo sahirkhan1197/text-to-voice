@@ -4,10 +4,14 @@ import os
 
 app = Flask(__name__)
 
-@app.route("/speak", methods=["POST"])
+@app.route("/speak", methods=["GET", "POST"])
 def speak():
-    text = request.form.get("text")
-    if not text:
+    if request.method == "POST":
+        text = request.form.get("text")
+    else:  # Allow GET requests for easier testing
+        text = request.args.get("text", "नमस्ते")
+
+    if not text or text.strip() == "":
         return "Error: No text provided!", 400
 
     language = "hi"  # Hindi language
@@ -20,4 +24,5 @@ def speak():
 
 if __name__ == "__main__":
     from waitress import serve
-    serve(app, host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 8080))  # Render requires 8080
+    serve(app, host="0.0.0.0", port=port)
