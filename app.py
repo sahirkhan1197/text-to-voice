@@ -8,8 +8,8 @@ app = Flask(__name__)
 def speak():
     if request.method == "POST":
         text = request.form.get("text")
-    else:  # Allow GET requests for easier testing
-        text = request.args.get("text", "नमस्ते")
+    else:
+        text = request.args.get("text", "नमस्ते")  # Default text for GET
 
     if not text or text.strip() == "":
         return "Error: No text provided!", 400
